@@ -5,10 +5,34 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './Home.css';
-import { image } from 'framer-motion/client';
 
 const Home = () => {
+  const [backendProperties, setBackendProperties] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [activeTabId, setActiveTabId] = useState(null);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const propResponse = await axios.get('http://localhost:5000/api/public/properties');
+        setBackendProperties(propResponse.data);
+
+        const catResponse = await axios.get('http://localhost:5000/api/admin/categories');
+        setCategories(catResponse.data);
+
+        if (catResponse.data.length > 0) {
+          setActiveTabId(catResponse.data[0].category_id);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const filteredLuxProperties = backendProperties.filter(
+    (property) => property.category_id === activeTabId
+  );
   const slidesData = [
     {
       id: 1,
@@ -136,11 +160,59 @@ const Home = () => {
       timer: '134 : 05 : 17 : 56'
     }
   ];
+  const resortSlides = [
+    {
+      id: 1,
+      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80',
+      title: 'Family Villas C-92',
+      tag: 'New',
+      timer: '133 : 07 : 43 : 09',
+      size: '1700 sq ft',
+      price: 'Rs. 632,800.00 INR',
+      oldPrice: 'Rs. 681,500.00 INR'
+    },
+    {
+      id: 2,
+      image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80',
+      title: 'Oceanview Retreat A-12',
+      tag: 'Hot',
+      size: '2000 sq ft',
+      price: 'Rs. 850,000.00 INR',
+      oldPrice: 'Rs. 900,000.00 INR'
+    },
+    {
+      id: 3,
+      image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80',
+      title: 'Town Place Apartments E-62',
+      tag: 'New',
+      size: '1200 sq ft',
+      price: 'Rs. 486,300.00 INR'
+    },
+    {
+      id: 4,
+      image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=600&q=80',
+      title: 'MiniPalais D-703',
+      tag: 'New',
+      size: '1300 sq ft',
+      price: 'Rs. 972,600.00 INR',
+    },
+    {
+      id: 5,
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/products/1_a0d187f1-b718-41be-9e2a-33fe676569fe_600x600.png?v=1685009017',
+      title: 'Meadow View D -205',
+      tag: 'Hot',
+      size: '1500 sq ft',
+      price: 'Rs. 1,200,000.00 INR'
+    }
+  ];
 
   const [bpPrevEl, setBpPrevEl] = React.useState(null);
   const [bpNextEl, setBpNextEl] = React.useState(null);
   const [fhPrevEl, setFhPrevEl] = React.useState(null);
   const [fhNextEl, setFhNextEl] = React.useState(null);
+
+
+
 
   return (
     <>
@@ -397,6 +469,170 @@ const Home = () => {
           <div className="fh-footer">
             <h3>Open the door for a spacious living</h3>
             <p>Indulge in the ultimate coastal lifestyle with our contemporary beachfront properties. Immerse yourself in the soothing sounds of the ocean and bask in the warm embrace of the sun, just steps.</p>
+          </div>
+
+        </div>
+      </section>
+      <section className="resort-section">
+        <div className="resort-bg-large"></div>
+        <div className="resort-bottom-bar">
+          <div className="resort-container">
+
+            <div className="resort-left-slider">
+              <Swiper
+                modules={[Navigation]}
+                navigation={{
+                  prevEl: '.resort-nav-prev',
+                  nextEl: '.resort-nav-next'
+                }}
+                slidesPerView={1}
+                speed={800}
+                className="resort-swiper"
+              >
+                {resortSlides.map((slide) => (
+                  <SwiperSlide key={slide.id}>
+                    <div className="resort-card">
+                      <div className="resort-card-img-wrapper">
+                        {slide.tag && <div className="resort-card-badge">{slide.tag}</div>}
+                        <img src={slide.image} alt={slide.title} />
+                        {slide.timer && (
+                          <div className="resort-card-timer">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                            {slide.timer}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="resort-card-content">
+                        <div className="fh-card-tag">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="3" /></svg>
+                          Home
+                        </div>
+                        <h3>{slide.title}</h3>
+
+                        <div className="resort-select-wrapper">
+                          <select defaultValue={slide.size}>
+                            <option value={slide.size}>{slide.size}</option>
+                            <option value="2000 sq ft">2000 sq ft</option>
+                          </select>
+                        </div>
+
+                        <div className="resort-price-wrapper">
+                          <span className="resort-current-price">{slide.price}</span>
+                          {slide.oldPrice && <span className="resort-old-price">{slide.oldPrice}</span>}
+                        </div>
+
+                        <button className="resort-add-btn">
+                          Add to Cart
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="resort-custom-nav">
+                <button className="resort-nav-prev">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+                </button>
+                <div className="resort-nav-line"></div>
+                <button className="resort-nav-next">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                </button>
+              </div>
+            </div>
+            <div className="resort-right-text">
+              <p>Experience the epitome of luxury and leisure in our resort-style private estates. Set within lush landscaped grounds, these exclusive properties offer a wealth of amenities to indulge your every desire.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+     <section className="lux-section">
+        <div className="lux-container">
+          
+          <h2 className="lux-main-title">Luxurious properties</h2>
+          
+          <div className="lux-tabs-wrapper">
+            {categories.map(cat => (
+              <button 
+                key={cat.category_id} 
+                className={`lux-tab-btn ${activeTabId === cat.category_id ? 'active-tab' : ''}`}
+                onClick={() => setActiveTabId(cat.category_id)}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+          
+          <div className="lux-slider-container">
+            <Swiper
+              modules={[Navigation]}
+              navigation={{
+                prevEl: '.lux-nav-prev',
+                nextEl: '.lux-nav-next'
+              }}
+              slidesPerView={4}
+              spaceBetween={20}
+              speed={800}
+              className="lux-swiper"
+            >
+              {filteredLuxProperties.map((property, index) => {
+                let imgUrl = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80';
+                if (property.images_json && Array.isArray(property.images_json) && property.images_json.length > 0) {
+                  imgUrl = property.images_json[0];
+                }
+                
+                const sqftString = (property.description && property.description !== 'N/A') ? property.description : '1200';
+                const sqftOptions = sqftString.split(',').map(item => item.trim());
+                const isCardActive = index === 0; 
+
+                return (
+                  <SwiperSlide key={property.property_id}>
+                    <div className={`lux-card ${isCardActive ? 'lux-card-light' : 'lux-card-dark'}`}>
+                      <div className="lux-card-img-wrap">
+                        <img src={imgUrl} alt={property.title} />
+                      </div>
+                      
+                      <div className="lux-card-content">
+                        <div className="lux-tag">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                          Home
+                        </div>
+                        
+                        <h3 className="lux-title">{property.title}</h3>
+                        
+                        <div className="lux-select-box">
+                          <select defaultValue={`${sqftOptions[0]} sq ft`}>
+                            {sqftOptions.map((sq, i) => (
+                              <option key={i} value={`${sq} sq ft`}>{sq} sq ft</option>
+                            ))}
+                          </select>
+                        </div>
+                        
+                        <div className="lux-price-box">
+                          <div className="lux-current-price">Rs. {property.price} INR</div>
+                        </div>
+                        
+                        <button className="lux-add-btn">
+                          Add to Cart
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+
+          <div className="lux-custom-nav">
+            <button className="lux-nav-prev">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div className="lux-nav-line"></div>
+            <button className="lux-nav-next">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
           </div>
 
         </div>

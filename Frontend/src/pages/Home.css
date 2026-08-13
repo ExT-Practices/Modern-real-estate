@@ -872,3 +872,421 @@
     font-size: 30px;
   }
 }
+.resort-section {
+  position: relative;
+  width: 100%;
+  font-family: 'Jost', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.resort-bg-large {
+  width: 100%;
+  height: 600px;
+  min-height: 500px;
+  background-image: url('https://modernrealestate-workdo.myshopify.com/cdn/shop/files/shop-pro.png?v=1685332654'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.resort-bottom-bar {
+  width: 100%;
+  height: 0;
+  background-color: #1a2226;
+  min-height: 250px;
+  position: relative;
+}
+
+.resort-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 20px;
+  position: relative;
+  bottom: 178px; 
+}
+
+.resort-left-slider {
+  width: 55%;
+  position: relative;
+}
+
+.resort-swiper {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.resort-card {
+  display: flex;
+  background-color: #faebd7;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.resort-card-img-wrapper {
+  width: 50%;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+}
+
+.resort-card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.resort-card-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #c4997e;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.resort-card-timer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(26, 34, 38, 0.85);
+  color: #ffffff;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.resort-card-content {
+  width: 50%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  background-color: #faebd7;
+}
+
+.resort-card-content h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+  color: #121315;
+}
+
+.resort-select-wrapper select {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.resort-price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resort-current-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: #121315;
+}
+
+.resort-old-price {
+  font-size: 13px;
+  text-decoration: line-through;
+  color: #888888;
+}
+
+.resort-add-btn {
+  align-self: flex-start;
+  padding: 12px 24px;
+  border-radius: 30px;
+  background-color: #1a2226;
+  color: #ffffff;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.resort-custom-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.resort-nav-prev,
+.resort-nav-next {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.resort-nav-line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.resort-right-text {
+  width: 40%;
+  padding-bottom: 70px;
+}
+
+.resort-right-text p {
+  color: #FFE7D9;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+}
+.lux-section {
+  width: 100%;
+  background-color: #1a2226;
+  font-family: 'Jost', sans-serif;
+  padding: 80px 0;
+}
+
+.lux-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.lux-main-title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #FFE7D9;
+  margin: 0 0 30px 0;
+}
+
+.lux-tabs-wrapper {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 30px;
+}
+
+.lux-tab-btn {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lux-tab-btn.active-tab {
+  background-color: #FFE7D9;
+  color: #1a2226;
+  border-color: #faebd7;
+}
+
+.lux-slider-container {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.lux-swiper {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.lux-card {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  height: 100%;
+  overflow: hidden;
+}
+
+.lux-card-light {
+  background-color: #faebd7;
+  color: #1a2226;
+  border-color: #faebd7;
+}
+
+.lux-card-dark {
+  background-color: #1a2226;
+  color: #ffffff;
+}
+
+.lux-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 80% 100%, 0 100%);
+}
+
+.lux-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lux-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #dca77b;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.lux-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+.lux-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.lux-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lux-select-box select {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 13px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.lux-card-light .lux-select-box select {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.lux-price-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 5px;
+}
+
+.lux-current-price {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.lux-old-price {
+  font-size: 12px;
+  text-decoration: line-through;
+  color: #888888;
+}
+
+.lux-card-light .lux-old-price {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.lux-add-btn {
+  align-self: flex-start;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background-color: #faebd7;
+  color: #1a2226;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.lux-card-light .lux-add-btn {
+  background-color: #1a2226;
+  color: #ffffff;
+}
+
+.lux-custom-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.lux-nav-prev,
+.lux-nav-next {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lux-nav-line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+}

@@ -14,25 +14,27 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const propResponse = await axios.get('http://localhost:5000/api/public/properties');
-        setBackendProperties(propResponse.data);
+        const propResponse = await axios.get('http://localhost:5000/api/admin/properties');
+        if (Array.isArray(propResponse.data)) {
+          setBackendProperties(propResponse.data);
+        }
 
         const catResponse = await axios.get('http://localhost:5000/api/admin/categories');
-        setCategories(catResponse.data);
-
-        if (catResponse.data.length > 0) {
-          setActiveTabId(catResponse.data[0].category_id);
+        if (Array.isArray(catResponse.data)) {
+          setCategories(catResponse.data);
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching properties or categories:", error);
       }
     };
     fetchData();
   }, []);
 
-  const filteredLuxProperties = backendProperties.filter(
-    (property) => property.category_id === activeTabId
-  );
+  const filteredLuxProperties = activeTabId === null
+    ? backendProperties
+    : backendProperties.filter(
+        (property) => Number(property.category_id) === Number(activeTabId)
+      );
   const slidesData = [
     {
       id: 1,
@@ -205,11 +207,47 @@ const Home = () => {
       price: 'Rs. 1,200,000.00 INR'
     }
   ];
+  const penthouseSlides = [
+    {
+      id: 1,
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/files/3d-rendering-house-model_1.png?v=1739773149', 
+      tag: 'Home',
+      title: 'The White House J-54',
+      size: '1800 sq ft',
+      price: 'Rs. 292,100.00 INR'
+    },
+    {
+      id: 2,
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/products/1_e02eada1-a7e9-4b6a-85a4-df6e4f913d79_600x600.png?v=1685009064',
+      tag: 'Home',
+      title: 'Town Place Walkups A-404',
+      size: '1600 sq ft',
+      price: 'Rs. 450,500.00 INR'
+    },
+    {
+      id: 3,
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/products/1_12cea679-aec3-430e-95c1-55cb596b250a_600x600.png?v=1685009058',
+      tag: 'Home',
+      title: 'Meadow View D -205',
+      size: '1200 sq ft',
+      price: 'Rs. 1,200,000.00 INR'
+    },
+    {
+      id: 4,
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/products/1_f26220d0-23df-49cc-8ab9-2ef5f66b891a_600x600.png?v=1685009024',
+      tag: 'Home',
+      title: 'Modern Loft B-303',
+      size: '1400 sq ft',
+      price: 'Rs. 650,000.00 INR'
+    }
+  ];
 
   const [bpPrevEl, setBpPrevEl] = React.useState(null);
   const [bpNextEl, setBpNextEl] = React.useState(null);
   const [fhPrevEl, setFhPrevEl] = React.useState(null);
   const [fhNextEl, setFhNextEl] = React.useState(null);
+  const [luxPrevEl, setLuxPrevEl] = React.useState(null);
+  const [luxNextEl, setLuxNextEl] = React.useState(null);
 
 
 
@@ -547,94 +585,252 @@ const Home = () => {
           </div>
         </div>
       </section>
-     <section className="lux-section">
+      <section className="lux-section">
         <div className="lux-container">
           
           <h2 className="lux-main-title">Luxurious properties</h2>
           
           <div className="lux-tabs-wrapper">
-            {categories.map(cat => (
-              <button 
-                key={cat.category_id} 
-                className={`lux-tab-btn ${activeTabId === cat.category_id ? 'active-tab' : ''}`}
-                onClick={() => setActiveTabId(cat.category_id)}
-              >
-                {cat.name}
-              </button>
-            ))}
+           
+            {categories.map(cat => {
+              const catId = cat.id || cat.category_id;
+              return (
+                <button 
+                  key={catId} 
+                  className={`lux-tab-btn ${activeTabId === catId ? 'active-tab' : ''}`}
+                  onClick={() => setActiveTabId(catId)}
+                >
+                  {cat.name}
+                </button>
+              );
+            })}
           </div>
+
+          <div className="lux-tab-line"></div>
           
           <div className="lux-slider-container">
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: '.lux-nav-prev',
-                nextEl: '.lux-nav-next'
-              }}
-              slidesPerView={4}
-              spaceBetween={20}
-              speed={800}
-              className="lux-swiper"
-            >
-              {filteredLuxProperties.map((property, index) => {
-                let imgUrl = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80';
-                if (property.images_json && Array.isArray(property.images_json) && property.images_json.length > 0) {
-                  imgUrl = property.images_json[0];
-                }
-                
-                const sqftString = (property.description && property.description !== 'N/A') ? property.description : '1200';
-                const sqftOptions = sqftString.split(',').map(item => item.trim());
-                const isCardActive = index === 0; 
+            {filteredLuxProperties.length > 0 ? (
+              <Swiper
+                modules={[Navigation]}
+                navigation={{
+                  prevEl: luxPrevEl,
+                  nextEl: luxNextEl
+                }}
+                slidesPerView={4.2}
+                spaceBetween={20}
+                speed={700}
+                className="lux-swiper"
+                breakpoints={{
+                  320: { slidesPerView: 1.2, spaceBetween: 14 },
+                  640: { slidesPerView: 2.2, spaceBetween: 16 },
+                  1024: { slidesPerView: 3.2, spaceBetween: 18 },
+                  1280: { slidesPerView: 4.2, spaceBetween: 20 }
+                }}
+              >
+                {filteredLuxProperties.map((property, index) => {
+                  let imgUrl = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80';
+                  
+                  if (property.image) {
+                    imgUrl = property.image;
+                  } else if (property.image_url) {
+                    imgUrl = property.image_url;
+                  } else if (property.images_json) {
+                    try {
+                      const parsed = typeof property.images_json === 'string' ? JSON.parse(property.images_json) : property.images_json;
+                      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]) {
+                        imgUrl = parsed[0];
+                      }
+                    } catch (e) {
+                      if (typeof property.images_json === 'string' && property.images_json.startsWith('http')) {
+                        imgUrl = property.images_json;
+                      }
+                    }
+                  }
 
-                return (
-                  <SwiperSlide key={property.property_id}>
-                    <div className={`lux-card ${isCardActive ? 'lux-card-light' : 'lux-card-dark'}`}>
-                      <div className="lux-card-img-wrap">
-                        <img src={imgUrl} alt={property.title} />
-                      </div>
-                      
-                      <div className="lux-card-content">
-                        <div className="lux-tag">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-                          Home
+                  const sqftString = property.description && property.description !== 'N/A' ? property.description : '1200';
+                  const sqftOptions = sqftString.split(',').map(item => item.trim());
+                  const isCardActive = index === 2;
+
+                  return (
+                    <SwiperSlide key={property.property_id || index}>
+                      <div className={`lux-card ${isCardActive ? 'lux-card-light' : 'lux-card-dark'}`}>
+                        <div className="lux-card-img-wrap">
+                          {property.status && property.status !== 'available' && (
+                            <div className="lux-badge">{property.status}</div>
+                          )}
+                          <img src={imgUrl} alt={property.title} />
                         </div>
                         
-                        <h3 className="lux-title">{property.title}</h3>
+                        <div className="lux-card-content">
+                          <div className="lux-tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                            Home
+                          </div>
+                          
+                          <h3 className="lux-title">{property.title}</h3>
+                          
+                          <div className="lux-select-box">
+                            <select defaultValue={`${sqftOptions[0]} sq ft`}>
+                              {sqftOptions.map((sq, i) => (
+                                <option key={i} value={sq.includes('sq ft') ? sq : `${sq} sq ft`}>
+                                  {sq.includes('sq ft') ? sq : `${sq} sq ft`}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          
+                          <div className="lux-price-box">
+                            <span className="lux-current-price">
+                              {property.price?.toString().startsWith('Rs.') ? property.price : `Rs. ${property.price} INR`}
+                            </span>
+                          </div>
+                          
+                          <button className="lux-add-btn">
+                            Add to Cart
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            ) : (
+              <p style={{ color: '#fceada', padding: '30px 0', opacity: 0.8 }}>No properties found in this category.</p>
+            )}
+          </div>
+
+          <div className="lux-custom-nav">
+            <button ref={(node) => setLuxPrevEl(node)} className="lux-nav-prev" aria-label="Previous slide">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <div className="lux-nav-line"></div>
+            <button ref={(node) => setLuxNextEl(node)} className="lux-nav-next" aria-label="Next slide">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+          </div>
+
+        </div>
+      </section>
+      <section className="penthouse-section">
+        <div className="penthouse-container">
+          
+          <div className="penthouse-left">
+            <div className="penthouse-img-wrapper">
+              <img 
+                src="https://modernrealestate-workdo.myshopify.com/cdn/shop/files/modern-houses.png?v=1685104452" 
+                alt="Interior View" 
+                className="penthouse-main-img"
+              />
+              <div className="penthouse-hotspot">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+            </div>
+          </div>
+
+          <div className="penthouse-right">
+            <p className="penthouse-desc">
+              Elevate your living experience to new heights in our exclusive penthouse apartments. Perched atop towering skyscrapers, these magnificent residences offer unrivaled panoramic views that stretch as far as the eye can see.
+            </p>
+
+            <div className="penthouse-slider-wrapper">
+              <Swiper
+                modules={[Navigation]}
+                navigation={{
+                  prevEl: '.ph-nav-prev',
+                  nextEl: '.ph-nav-next'
+                }}
+                slidesPerView={1}
+                spaceBetween={20}
+                speed={800}
+                className="ph-swiper"
+              >
+                {penthouseSlides.map((slide) => (
+                  <SwiperSlide key={slide.id}>
+                    <div className="ph-card">
+                      <div className="ph-card-img-wrap">
+                        <img src={slide.image} alt={slide.title} />
+                      </div>
+                      
+                      <div className="ph-card-content">
+                        <div className="ph-tag">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                          {slide.tag}
+                        </div>
                         
-                        <div className="lux-select-box">
-                          <select defaultValue={`${sqftOptions[0]} sq ft`}>
-                            {sqftOptions.map((sq, i) => (
-                              <option key={i} value={`${sq} sq ft`}>{sq} sq ft</option>
-                            ))}
+                        <h3 className="ph-title">{slide.title}</h3>
+                        
+                        <div className="ph-select-box">
+                          <select defaultValue={slide.size}>
+                            <option value={slide.size}>{slide.size}</option>
+                            <option value="2000 sq ft">2000 sq ft</option>
                           </select>
                         </div>
                         
-                        <div className="lux-price-box">
-                          <div className="lux-current-price">Rs. {property.price} INR</div>
-                        </div>
+                        <div className="ph-price">{slide.price}</div>
                         
-                        <button className="lux-add-btn">
+                        <button className="ph-add-btn">
                           Add to Cart
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </button>
                       </div>
                     </div>
                   </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          </div>
+                ))}
+              </Swiper>
 
-          <div className="lux-custom-nav">
-            <button className="lux-nav-prev">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            </button>
-            <div className="lux-nav-line"></div>
-            <button className="lux-nav-next">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
+              <div className="ph-custom-nav">
+                <button className="ph-nav-prev">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                </button>
+                <div className="ph-nav-line"></div>
+                <button className="ph-nav-next">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
           </div>
-
+        </div>
+      </section>
+      <section className="ideal-space-section">
+        <div className="ideal-container">
+          <div className="ideal-top-left">
+              <h2>Find your ideal<br />space</h2>
+            </div>
+          <div className="ideal-image-wrapper">
+            <img 
+              src="https://modernrealestate-workdo.myshopify.com/cdn/shop/files/subscribe-img.png?v=1685078817" 
+              alt="Ideal Space" 
+              className="ideal-bg-img"
+            />
+            
+            <div className="ideal-top-right">
+              <p>
+                Welcome to the epitome of modern living in our tech-integrated homes. Seamlessly blending 
+                cutting-edge technology with elegant design, these residences are equipped with state-of-the-
+                art smart home systems that enhance convenience, security, and energy efficiency.
+              </p>
+            </div>
+            <div className="ideal-bottom-right">
+              <h3>Subscribe newsletter and get -20% off</h3>
+              <p>
+                Control your home's lighting, temperature, and entertainment systems with a simple touch or 
+                voice command. Embrace the future of living as you experience the effortless integration of 
+                technology into every aspect of your daily life.
+              </p>           
+              <form className="ideal-newsletter-form" onSubmit={(e) => e.preventDefault()}>
+                <input 
+                  type="email" 
+                  placeholder="Enter email address..." 
+                  required 
+                />
+                <button type="submit">
+                  Subscription
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </form>
+            </div>          
+          </div>
         </div>
       </section>
     </>

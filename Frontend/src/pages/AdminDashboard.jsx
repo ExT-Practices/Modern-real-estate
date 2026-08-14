@@ -62,6 +62,18 @@ const AdminDashboard = () => {
     navigate('/login');
   };
 
+  const handleDeleteProperty = async (id) => {
+    if (window.confirm("Are you sure you want to delete this property?")) {
+      try {
+        await axios.delete(`http://localhost:5000/api/admin/properties/${id}`, getAuthHeaders());
+        fetchProperties(); 
+      } catch (err) {
+        console.error("Error deleting property:", err);
+        alert("error.");
+      }
+    }
+  };
+
   const handleCategorySubmit = async (e) => {
     e.preventDefault();
     try {
@@ -95,7 +107,7 @@ const AdminDashboard = () => {
       fetchProperties();
     } catch (err) {
       console.error("Error adding property:", err);
-      alert("Property add nahi hui, console check karein!");
+      alert("Property didn't get added!");
     }
   };
 
@@ -139,14 +151,17 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {categories.map((cat) => (
-                    <tr key={cat.category_id}>
-                      <td>{cat.category_id}</td>
-                      <td>{cat.name}</td>
-                      <td>{cat.slug}</td>
-                      <td>{cat.description}</td>
-                    </tr>
-                  ))}
+                  {categories.map((cat) => {
+                    const catId = cat.id || cat.category_id;
+                    return (
+                      <tr key={catId}>
+                        <td>{catId}</td>
+                        <td>{cat.name}</td>
+                        <td>{cat.slug}</td>
+                        <td>{cat.description}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -165,9 +180,12 @@ const AdminDashboard = () => {
                   required
                 >
                   <option value="">Select Category</option>
-                  {categories.map(cat => (
-                    <option key={cat.category_id} value={cat.category_id}>{cat.name}</option>
-                  ))}
+                  {categories.map(cat => {
+                    const catId = cat.id || cat.category_id;
+                    return (
+                      <option key={catId} value={catId}>{cat.name}</option>
+                    );
+                  })}
                 </select>
                 <input type="text" placeholder="Property Title" value={newProperty.title} onChange={(e) => setNewProperty({ ...newProperty, title: e.target.value })} required />
                 <input type="number" placeholder="Price (INR)" value={newProperty.price} onChange={(e) => setNewProperty({ ...newProperty, price: e.target.value })} required />
@@ -200,6 +218,7 @@ const AdminDashboard = () => {
                     <th>Title</th>
                     <th>Price</th>
                     <th>Sq ft Options</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -208,6 +227,9 @@ const AdminDashboard = () => {
                       <td>{prop.title}</td>
                       <td>₹{prop.price}</td>
                       <td>{prop.description}</td>
+                      <td>
+                        <button className="delete-btn" onClick={() => handleDeleteProperty(prop.property_id)}>Delete</button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

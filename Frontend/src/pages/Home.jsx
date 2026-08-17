@@ -33,8 +33,8 @@ const Home = () => {
   const filteredLuxProperties = activeTabId === null
     ? backendProperties
     : backendProperties.filter(
-        (property) => Number(property.category_id) === Number(activeTabId)
-      );
+      (property) => Number(property.category_id) === Number(activeTabId)
+    );
   const slidesData = [
     {
       id: 1,
@@ -210,7 +210,7 @@ const Home = () => {
   const penthouseSlides = [
     {
       id: 1,
-      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/files/3d-rendering-house-model_1.png?v=1739773149', 
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/files/3d-rendering-house-model_1.png?v=1739773149',
       tag: 'Home',
       title: 'The White House J-54',
       size: '1800 sq ft',
@@ -239,6 +239,57 @@ const Home = () => {
       title: 'Modern Loft B-303',
       size: '1400 sq ft',
       price: 'Rs. 650,000.00 INR'
+    }
+  ];
+
+  const blogSlides = [
+    {
+      id: 1,
+      badge: 'realestate',
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/articles/1.png?v=1685011820',
+      date: '25 May 2023 | WorkDo',
+      title: 'A modern double house in th...',
+      desc: 'Forest Haven, a remarkable retreat nestled amidst the serene beauty of the forest. This modern double house offers a unique blend of contemporar...',
+    },
+    {
+      id: 2,
+      badge: 'realestate',
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/articles/2.png?v=1685011769',
+      date: '25 May 2023 | WorkDo',
+      title: 'A modern home in the...',
+      desc: 'a contemporary residence offering the perfect blend of modern design and the comforts of San Francisco living. Nestled in the heart of this vibrant cit...',
+    },
+    {
+      id: 3,
+      badge: 'realestate',
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/articles/4.png?v=1685011741',
+      date: '25 May 2023 | WorkDo',
+      title: '2 storey villa with sea access',
+      desc: 'Seaside Serenity, where luxury meets coastal living in this stunning 2-storey villa with direct access to the sparkling sea. Nestled in a prime location, this...',
+    },
+    {
+      id: 4,
+      badge: 'realestate',
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/articles/5.png?v=1685011915',
+      date: '25 May 2023 | WorkDo',
+      title: 'Dream House Diaries Points...',
+      desc: 'where we challenge conventional notions of luxury living and explore the unique joys of prioritizing points over penthouses. In a world where materi...',
+    },
+    {
+      id: 5,
+      badge: 'realestate',
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/articles/3.png?v=1685011845',
+      date: '25 May 2023 | WorkDo',
+      title: 'Modern Apartment with City View',
+      desc: 'Urban Elegance, a sophisticated apartment offering breathtaking city views and modern amenities. Located in the heart of the metropolis.'
+    },
+    {
+      id: 6,
+      badge: 'realestate',
+      image: 'https://modernrealestate-workdo.myshopify.com/cdn/shop/articles/1.png?v=1685011820',
+      date: '25 May 2023 | WorkDo',
+      title: 'Luxury Villa with Private Pool',
+      desc: 'Paradise Awaits, a stunning luxury villa featuring a private pool and breathtaking views. This exclusive property offers the ultimate in comfort and elegance.'
     }
   ];
 
@@ -401,7 +452,7 @@ const Home = () => {
 
       <section className="find-home-section">
         <div className="find-home-container">
-
+          
           <div className="fh-header">
             <h2>Find your home place</h2>
             <div className="fh-header-line"></div>
@@ -587,16 +638,16 @@ const Home = () => {
       </section>
       <section className="lux-section">
         <div className="lux-container">
-          
+
           <h2 className="lux-main-title">Luxurious properties</h2>
-          
+
           <div className="lux-tabs-wrapper">
-           
+
             {categories.map(cat => {
               const catId = cat.id || cat.category_id;
               return (
-                <button 
-                  key={catId} 
+                <button
+                  key={catId}
                   className={`lux-tab-btn ${activeTabId === catId ? 'active-tab' : ''}`}
                   onClick={() => setActiveTabId(catId)}
                 >
@@ -607,7 +658,7 @@ const Home = () => {
           </div>
 
           <div className="lux-tab-line"></div>
-          
+
           <div className="lux-slider-container">
             {filteredLuxProperties.length > 0 ? (
               <Swiper
@@ -629,7 +680,7 @@ const Home = () => {
               >
                 {filteredLuxProperties.map((property, index) => {
                   let imgUrl = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80';
-                  
+
                   if (property.image) {
                     imgUrl = property.image;
                   } else if (property.image_url) {
@@ -660,15 +711,15 @@ const Home = () => {
                           )}
                           <img src={imgUrl} alt={property.title} />
                         </div>
-                        
+
                         <div className="lux-card-content">
                           <div className="lux-tag">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="3" /></svg>
                             Home
                           </div>
-                          
+
                           <h3 className="lux-title">{property.title}</h3>
-                          
+
                           <div className="lux-select-box">
                             <select defaultValue={`${sqftOptions[0]} sq ft`}>
                               {sqftOptions.map((sq, i) => (
@@ -678,16 +729,16 @@ const Home = () => {
                               ))}
                             </select>
                           </div>
-                          
+
                           <div className="lux-price-box">
                             <span className="lux-current-price">
                               {property.price?.toString().startsWith('Rs.') ? property.price : `Rs. ${property.price} INR`}
                             </span>
                           </div>
-                          
+
                           <button className="lux-add-btn">
                             Add to Cart
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                           </button>
                         </div>
                       </div>
@@ -714,12 +765,12 @@ const Home = () => {
       </section>
       <section className="penthouse-section">
         <div className="penthouse-container">
-          
+
           <div className="penthouse-left">
             <div className="penthouse-img-wrapper">
-              <img 
-                src="https://modernrealestate-workdo.myshopify.com/cdn/shop/files/modern-houses.png?v=1685104452" 
-                alt="Interior View" 
+              <img
+                src="https://modernrealestate-workdo.myshopify.com/cdn/shop/files/modern-houses.png?v=1685104452"
+                alt="Interior View"
                 className="penthouse-main-img"
               />
               <div className="penthouse-hotspot">
@@ -751,27 +802,27 @@ const Home = () => {
                       <div className="ph-card-img-wrap">
                         <img src={slide.image} alt={slide.title} />
                       </div>
-                      
+
                       <div className="ph-card-content">
                         <div className="ph-tag">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="3" /></svg>
                           {slide.tag}
                         </div>
-                        
+
                         <h3 className="ph-title">{slide.title}</h3>
-                        
+
                         <div className="ph-select-box">
                           <select defaultValue={slide.size}>
                             <option value={slide.size}>{slide.size}</option>
                             <option value="2000 sq ft">2000 sq ft</option>
                           </select>
                         </div>
-                        
+
                         <div className="ph-price">{slide.price}</div>
-                        
+
                         <button className="ph-add-btn">
                           Add to Cart
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                         </button>
                       </div>
                     </div>
@@ -781,11 +832,11 @@ const Home = () => {
 
               <div className="ph-custom-nav">
                 <button className="ph-nav-prev">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
                 </button>
                 <div className="ph-nav-line"></div>
                 <button className="ph-nav-next">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                 </button>
               </div>
             </div>
@@ -795,18 +846,18 @@ const Home = () => {
       <section className="ideal-space-section">
         <div className="ideal-container">
           <div className="ideal-top-left">
-              <h2>Find your ideal<br />space</h2>
-            </div>
+            <h2>Find your ideal<br />space</h2>
+          </div>
           <div className="ideal-image-wrapper">
-            <img 
-              src="https://modernrealestate-workdo.myshopify.com/cdn/shop/files/subscribe-img.png?v=1685078817" 
-              alt="Ideal Space" 
+            <img
+              src="https://modernrealestate-workdo.myshopify.com/cdn/shop/files/subscribe-img.png?v=1685078817"
+              alt="Ideal Space"
               className="ideal-bg-img"
             />
-            
+
             <div className="ideal-top-right">
               <p>
-                Welcome to the epitome of modern living in our tech-integrated homes. Seamlessly blending 
+                Welcome to the epitome of modern living in our tech-integrated homes. Seamlessly blending
                 cutting-edge technology with elegant design, these residences are equipped with state-of-the-
                 art smart home systems that enhance convenience, security, and energy efficiency.
               </p>
@@ -814,22 +865,72 @@ const Home = () => {
             <div className="ideal-bottom-right">
               <h3>Subscribe newsletter and get -20% off</h3>
               <p>
-                Control your home's lighting, temperature, and entertainment systems with a simple touch or 
-                voice command. Embrace the future of living as you experience the effortless integration of 
+                Control your home's lighting, temperature, and entertainment systems with a simple touch or
+                voice command. Embrace the future of living as you experience the effortless integration of
                 technology into every aspect of your daily life.
-              </p>           
+              </p>
               <form className="ideal-newsletter-form" onSubmit={(e) => e.preventDefault()}>
-                <input 
-                  type="email" 
-                  placeholder="Enter email address..." 
-                  required 
+                <input
+                  type="email"
+                  placeholder="Enter email address..."
+                  required
                 />
                 <button type="submit">
                   Subscription
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                 </button>
               </form>
-            </div>          
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section className="blog-section">
+        <div className="blog-container">
+          <h2 className="blog-main-title">Homes speaking for themselves</h2>
+
+          <div className="blog-slider-wrapper">
+            <Swiper
+              modules={[Navigation]}
+              navigation={{
+                prevEl: '.blog-nav-prev',
+                nextEl: '.blog-nav-next'
+              }}
+              slidesPerView={4}
+              spaceBetween={20}
+              speed={800}
+              className="blog-swiper"
+            >
+              {blogSlides.map((slide) => (
+                <SwiperSlide key={slide.id}>
+                  <div className="blog-card">
+                    <div className="blog-card-img-wrap">
+                      <span className="blog-badge">{slide.badge}</span>
+                      <img src={slide.image} alt={slide.title} />
+                    </div>
+                    <div className="blog-card-content">
+                      <div className="blog-meta">{slide.date}</div>
+                      <h3 className="blog-title">{slide.title}</h3>
+                      <p className="blog-desc">{slide.desc}</p>
+                      <button className="blog-btn">
+                        Show full details
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                      </button>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className="blog-custom-nav">
+              <button className="blog-nav-prev">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+              </button>
+              <div className="blog-nav-line"></div>
+              <button className="blog-nav-next">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </button>
+            </div>
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -103,7 +104,7 @@ const Navbar = () => {
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div className="dropdown-content simple-dropdown">
-            <a href="#">Blog Page</a>
+            <Link to="/blog">Blog Page</Link>
             <a href="#">Article Page</a>
           </div>
         </div>

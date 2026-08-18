@@ -15,7 +15,7 @@
 
 .footer-top {
   display: flex;
-  gap: 120px !important;
+  gap: 120px;
 }
 
 .footer-col h3 {
@@ -98,8 +98,24 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    gap: 40px;
+  }
   .footer-col {
     width: 100%;
+  }
+  .footer-container {
+    padding: 0 20px;
+  }
+  .footer-payments {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-col h3 {
+    margin: 0 0 15px 0;
   }
 }

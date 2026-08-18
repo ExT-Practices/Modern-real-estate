@@ -757,8 +757,8 @@ const Home = () => {
             </button>
             <div className="lux-nav-line"></div>
             <button ref={(node) => setLuxNextEl(node)} className="lux-nav-next" aria-label="Next slide">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </button>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </button>
           </div>
 
         </div>

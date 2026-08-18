@@ -892,7 +892,7 @@
 .resort-bottom-bar {
   width: 100%;
   height: 0;
-  background-color: #1a2226;
+  background-color: #141a1f;
   min-height: 250px;
   position: relative;
 }
@@ -1561,7 +1561,7 @@
 }
 .ideal-space-section {
   width: 100%;
-  background-color: #1a2226;
+  background-color: #121315;
   font-family: 'Jost', sans-serif;
   padding: 50px 0;
   color: #FFE7D9;
@@ -1780,18 +1780,20 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  color: #FFE7D9 !important;
 }
 
 .blog-meta {
   font-size: 13px;
-  color: #cccccc;
   margin-bottom: 12px;
+  color: #ffe7d9 !important;
 }
 
 .blog-title {
   font-size: 18px;
   font-weight: 700;
   margin: 0 0 12px 0;
+  color: #ffe7d9 !important;
   line-height: 1.4;
   white-space: nowrap;
   overflow: hidden;
@@ -1800,8 +1802,8 @@
 
 .blog-desc {
   font-size: 14px;
-  color: #cccccc;
   line-height: 1.6;
+  color: #ffe7d9 !important;
   margin: 0 0 25px 0;
   flex-grow: 1;
 }
